@@ -49,7 +49,7 @@ def test_model(model, test_set, criterion):
     return avg_test_loss
 
 # Load the container
-container = GraphContainer.load_container('graph_container351g.pkl')
+container = GraphContainer.load_container('graph_container.pkl')
 
 # Access the test_set
 train_set, val_set, test_set = container.split_data(train_ratio=0.7, val_ratio=0.1, test_ratio=0.2)
