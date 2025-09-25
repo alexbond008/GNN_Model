@@ -1,11 +1,10 @@
-# Import necessary modules
-from torch.utils.data import DataLoader  # Importing DataLoader for batch processing
-from data_container import load_data_and_split_sets # Importing datasets from data_container module
-import torch  # Importing PyTorch library
-from GNNmodel import GraphGNN  # Importing the GraphGNN model from GNNmodel module
-import torch.nn as nn  # Importing neural network modules from PyTorch
-import torch.optim as optim  # Importing optimization algorithms from PyTorch
-import matplotlib.pyplot as plt  # Importing matplotlib for visualization
+from torch.utils.data import DataLoader
+from data_container import load_data_and_split_sets 
+import torch
+from GNNmodel import GraphGNN  
+import torch.nn as nn  
+import torch.optim as optim 
+import matplotlib.pyplot as plt  
 
 def plot_loss_curve(train_losses, val_losses, num_graphs, filename='loss_curve.png'):
     """
@@ -30,7 +29,6 @@ def plot_loss_curve(train_losses, val_losses, num_graphs, filename='loss_curve.p
     plt.savefig(filename)
     plt.show()
 
-# Define a function to train the model
 def train_model(model, train_set, criterion, optimizer, num_epochs=25):
     """
     Train the model.
@@ -184,15 +182,12 @@ folder_path = "GNN-AS01_mini"
 # load dataset
 train_set, val_set, test_set, num_loaded_graphs = load_data_and_split_sets(folder_path)
 
-# Example usage
 model = GraphGNN()  # Instantiate the GraphGNN model
 criterion = nn.MSELoss()  # Define the loss function
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)  # Define the optimization algorithm
 lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor = 0.5, patience=3)# Define the learning rate scheduler
 early_stopping = True  # Enable early stopping
 
-# Train the model with validation
 train_losses, val_losses = train_model_with_validation(model, train_set, val_set, criterion, optimizer, lr_scheduler=lr_scheduler, early_stopping=early_stopping)
 
-# Plot the training and validation loss curves
 plot_loss_curve(train_losses,val_losses,num_loaded_graphs)

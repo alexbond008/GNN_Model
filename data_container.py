@@ -1,13 +1,10 @@
-# Import necessary modules
 import os
-from data_loader import AirwayGraph, read_graph_data  # Importing necessary functions from data_loader module
-import pickle  # Importing pickle module for serialization
-import re  # Importing re module for regular expressions
+from data_loader import AirwayGraph, read_graph_data
+import pickle  
+import re  
 
-# Define the folder path where the data is located
 folder_path = "GNN-AS01_mini"
 
-# Define a class to contain graphs
 class GraphContainer:
     def __init__(self):
         """
@@ -112,33 +109,27 @@ def load_data_and_split_sets(folder_path):
     - list: Three lists containing training, validation, and test sets.
     - num_of_graphs (int)
     """
-    # Initialize a container to hold graphs
     container = GraphContainer()
-    num_loaded_graphs = 0  # Initialize a counter for loaded graphs
+    num_loaded_graphs = 0 
 
-    # Define a function to extract the numeric part after "AS01_"
     def extract_number(filename):
         match = re.search(r'AS01_(\d+)\.csv', filename)
         if match:
             return int(match.group(1))
         else:
-            return -1  # Return a large negative number if no number is found
+            return -1 
 
     # Get a list of CSV file names in the folder and sort them based on the numeric part after "AS01_"
     csv_files = sorted([file_name for file_name in os.listdir(folder_path) if file_name.endswith(".csv")], key=extract_number)
 
-    # Iterate through each CSV file
     for csv_file_name in csv_files:
         try:
-            # Construct the full path of the CSV file
             csv_file_path = os.path.join(folder_path, csv_file_name)
             
-            # Construct the full path of the corresponding .edge file
             edge_file_path = os.path.join(folder_path, "generated_airways.edge")
 
             print("Graph with files of :", csv_file_path, " and ", edge_file_path, " is being loaded")
             
-            # Read node and edge data from CSV and .edge files
             node_data, edge_data = read_graph_data(csv_file_path, edge_file_path)
             
             # Create an AirwayGraph object
@@ -148,22 +139,16 @@ def load_data_and_split_sets(folder_path):
             container.add_graph(graph)
 
             print("Successfully added to container")
-            num_loaded_graphs += 1  # Increment the counter for loaded graphs
+            num_loaded_graphs += 1
 
         except Exception as e:
             print("Error occurred while loading graph:", e)
 
-    # Split the data into training, validation, and test sets
     train_set, val_set, test_set = container.split_data(train_ratio=0.7, val_ratio=0.1, test_ratio=0.2)
 
-    # Save all the graphs in the container
     container.save_container("graph_container.pkl")
     print("Graph container saved.")
 
-    # Output the number of graphs loaded
     print("Number of graphs saved:", num_loaded_graphs)
 
     return train_set, val_set, test_set, num_loaded_graphs
-
-
-

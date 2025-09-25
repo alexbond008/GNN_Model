@@ -1,0 +1,13 @@
+# Core scientific and ML libraries
+numpy
+matplotlib
+networkx
+scipy
+
+# PyTorch and GNN
+torch
+torch_geometric
+
+# (Optional) If using CUDA, add:
+# torch==<version>+cu<version> # e.g., torch==2.0.1+cu118
+# See https://pytorch.org/get-started/locally/ for details
