@@ -42,8 +42,6 @@ requirements.txt           # Python dependencies
 	```sh
 	python GNN_model_test.py
 	```
-4. **Add new data:**
-	Place new CSVs in `GNN-AS01/` and update loader logic if the format changes.
 
 ## Results & Performance
 - Initial models had high error (~1000%), but through systematic optimization (MAPE loss, early stopping, learning rate tuning), the final model achieved ~50% error on unseen data.
