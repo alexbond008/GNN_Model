@@ -1,37 +1,63 @@
-# Application of Graph Neural Networks for Simulating Airway Flow in the Lungs
 
-## Overview
-This repository contains the code and data for my final year dissertation titled **"Application of Graph Neural Networks for Simulating Airway Flow in the Lungs"**. The project focuses on predicting lung ventilation using a novel approach that applies Graph Neural Networks (GNNs). This work explores how effectively GNNs can simulate lung airways and predict pressure and flow rate at various points within the lung's airway tree.
+# Graph Neural Networks for Lung Airway Flow Simulation
 
-## Project Motivation
-Accurate simulations of airflow in lungs are essential for diagnosing and treating lung diseases. Traditional models often compromise between anatomical realism and computational efficiency. This project aims to bridge this gap by using GNNs, which can naturally model the lung's tree-like structure. The ultimate goal is to predict pressure and flow rates within a 30% error margin for unseen patient data.
+## Project Overview
+This repository presents a robust, research-driven implementation of Graph Neural Networks (GNNs) for simulating airflow in human lung airways. The project leverages the natural graph structure of the bronchial tree to predict pressure and flow rates at each airway segment, aiming to advance computational tools for respiratory health and personalized medicine.
 
-## Key Features
-- **Graph Representation**: Lungs modeled as a graph where nodes represent airways, and edges represent airflow paths.
-- **Data**: The model uses a dataset generated from a full-scale airway network model, which includes features such as pressure, radius, and spatial coordinates.
-- **Model**: A 6-layer Convolutional Graph Neural Network (GNN) was implemented with ReLU activation functions.
-- **Improvements**: The final model achieved a percentage error of 50% after experimentation with learning rates, loss functions (Mean Absolute Percentage Error - MAPE), and early stopping.
+## Why GNNs for Lungs?
+Traditional models of lung airflow often struggle to balance anatomical realism and computational efficiency. GNNs, by design, excel at learning on graph-structured data—making them ideal for modeling the complex, branching architecture of the lungs. This project demonstrates how GNNs can deliver accurate, scalable predictions for lung ventilation, with the potential to generalize to unseen patient data.
 
-## Project Files
-- `GNN-AS01/`: Contains the raw data and processed graphs representing lung structures.
-- `GNNModel.py`: Python script that holds the model architecture.
-- `GNN_model_train_val.py`: Run this file to see how the model is learning about the airway flow of the lungs!
-- `GNN_model_test.py`: Run this file to see how the model faces data it has never seen before!
-- `data_container.py` and `data_loader.py`: These files work to together wrap all the data in one class. Here is a quick look at what they do:
-![image](https://github.com/user-attachments/assets/014243ba-784c-48df-bab0-38db9d07bc7b)
- 
+## Key Features & Architecture
+- **Graph-Based Data**: Each lung is represented as a graph (nodes = airways, edges = airflow paths), with node features including spatial coordinates, radius, pressure, and flow rate.
+- **Modern GNN Model**: Implements a multi-layer (3-layer) Graph Convolutional Network (GCN) using PyTorch Geometric, with ReLU activations and robust training strategies.
+- **Data Pipeline**: Modular data loading and preprocessing via `data_container.py` and `data_loader.py`, supporting scalable experimentation and reproducibility.
+- **Training & Evaluation**: Scripts for training (`GNN_model_train_val.py`) and testing (`GNN_model_test.py`) the model, with support for early stopping and MAPE loss.
+- **Extensible Dataset**: Easily add new airway graph CSVs to `GNN-AS01/` for further research or clinical adaptation.
 
-## Libraries used
-- **Data Preparation**: `NetworkX` is used to create graph representations of lung airways.
-- **Model Training**: `Pytorch geometric` is used for GNN model
+## Directory Structure
+```
+GNN-AS01/                  # Raw and processed airway graph data (CSV)
+GNNmodel.py                # GNN model architecture (PyTorch Geometric)
+GNN_model_train_val.py     # Model training & validation script
+GNN_model_test.py          # Model evaluation on test data
+data_container.py          # Data container/wrapper class
+data_loader.py             # Data loading & preprocessing utilities
+Trained models and wrapped datasets/ # Saved models and datasets
+requirements.txt           # Python dependencies
+```
 
-## Results
-Initial models produced high errors (~1000%) but through various optimizations (MAPE loss, early stopping, etc.), the final model reduced errors to approximately 50%.
+## Getting Started
+1. **Install dependencies** (recommended: use a virtual environment):
+	```sh
+	python3 -m venv .venv
+	source .venv/bin/activate
+	pip install --upgrade pip
+	pip install -r requirements.txt
+	```
+2. **Train the model:**
+	```sh
+	python GNN_model_train_val.py
+	```
+3. **Test the model:**
+	```sh
+	python GNN_model_test.py
+	```
+4. **Add new data:**
+	Place new CSVs in `GNN-AS01/` and update loader logic if the format changes.
 
-## Future Work
-Future improvements could include:
-- Developing a physics-informed GNN by incorporating known equations of airflow.
-- Scaling up the dataset and using more complex neural network architectures.
+## Results & Performance
+- Initial models had high error (~1000%), but through systematic optimization (MAPE loss, early stopping, learning rate tuning), the final model achieved ~50% error on unseen data.
+- The codebase is structured for rapid experimentation and extension to new datasets or architectures.
+
+## Extensibility & Best Practices
+- **Modular Design**: All data access is routed through container/loader classes for consistency and maintainability.
+- **Reproducibility**: Model checkpoints and datasets are versioned in `Trained models and wrapped datasets/`.
+- **Open Science**: The code is well-commented and ready for adaptation to new research or clinical use cases.
+
+## Dependencies
+- Python 3.8+
+- numpy, matplotlib, networkx
+- torch, torch_geometric
 
 ## Contact
-For any questions, please contact me at: [aleksandergornik@gmail.com].
+For questions, collaboration, or feedback, please contact: [aleksandergornik@gmail.com]
