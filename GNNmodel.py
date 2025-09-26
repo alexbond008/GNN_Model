@@ -45,7 +45,6 @@ class GraphGNN(nn.Module):
         x = F.relu(self.conv1(x, edge_index, edge_attr))
         x = F.relu(self.conv2(x, edge_index, edge_attr))
         
-        # Output layer without activation (linear transformation)
         x = self.conv3(x, edge_index, edge_attr)
 
         return x.float()  # Convert the output to float

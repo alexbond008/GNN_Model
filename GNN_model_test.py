@@ -1,7 +1,6 @@
 from GNNmodel import GraphGNN
 from data_container import GraphContainer
 import torch
-#from data_container import test_set
 import torch.nn as nn
 
 
@@ -43,25 +42,19 @@ def test_model(model, test_set, criterion):
             test_loss = criterion(predictions, true_values).item()
             test_losses.append(test_loss)
 
-    # Calculate average test loss
     avg_test_loss = sum(test_losses) / len(test_losses)
 
     return avg_test_loss
 
-# Load the container
 container = GraphContainer.load_container('graph_container.pkl')
 
-# Access the test_set
 train_set, val_set, test_set = container.split_data(train_ratio=0.7, val_ratio=0.1, test_ratio=0.2)
 
 model = GraphGNN()
 model.load_state_dict(torch.load('Trained models and wrapped datasets/train_model_with_validation.pth'))
 
-# Define your loss criterion (e.g., MSELoss)
 criterion = nn.MSELoss()
 
-# Assuming you have defined your test set as 'test_set'
-# Call the test_model function
 avg_test_loss = test_model(model, test_set, criterion)
 
 print(f'Average Test Loss: {avg_test_loss}')

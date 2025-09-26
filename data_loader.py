@@ -5,7 +5,6 @@ import torch
 import matplotlib.pyplot as plt
 
 def read_graph_data(node_data, edge_data):
-    # Read node data from CSV
     columns = {}
     with open(node_data, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -48,10 +47,6 @@ def read_graph_data(node_data, edge_data):
     }
 
     return node_data, edge_data
-
-# Example usage:
-#node_data, edge_data = read_graph_data("testresult1.csv", "generated_airways.edge")
-
     
 class AirwayGraph:
     def __init__(self, node_data, edge_data):
@@ -93,7 +88,6 @@ class AirwayGraph:
         node_radius_dict = {i: radius for i, radius in enumerate(self.Radius)}
 
         edge_weights = torch.sqrt(torch.tensor([node_radius_dict[edge[0].item()]**2 + node_radius_dict[edge[1].item()]**2 for edge in edges])).float()
-        #print(edge_weights[:10])
         return edges, edge_weights
 
     def visualize_graph(self,G):
@@ -109,7 +103,7 @@ class AirwayGraph:
         # Concatenate pressure and flow rate tensors along the second dimension
         true_values = torch.cat((P_tensor.unsqueeze(1), Q_tensor.unsqueeze(1)), dim=1).float()
 
-                # Convert x, y, z, and R to torch tensors
+        # Convert x, y, z, and R to torch tensors
         x_tensor = torch.tensor(NodeX)
         y_tensor = torch.tensor(NodeY)
         z_tensor = torch.tensor(NodeZ)
