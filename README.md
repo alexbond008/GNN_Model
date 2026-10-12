@@ -58,4 +58,4 @@ requirements.txt           # Python dependencies
 - torch, torch_geometric
 
 ## Contact
-For questions, collaboration, or feedback, please contact: [aleksandergornik@gmail.com]
+For questions, collaboration, or feedback, please contact: https://www.linkedin.com/in/aleksgornik
